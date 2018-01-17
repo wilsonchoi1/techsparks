@@ -11,10 +11,10 @@
             <apiProperty key="api.version" value="1.0.0"/>
         </restConfiguration>
         <rest path="/">
-            <get uri="report">
+            <post uri="report">
                 <description>Report an accident</description>
                 <to uri="direct:report"/>
-            </get>
+            </post>
         </rest>
         <route id="report">
             <from id="report" uri="direct:report"/>
