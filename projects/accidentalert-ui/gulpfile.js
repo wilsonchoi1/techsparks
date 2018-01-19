@@ -148,7 +148,7 @@ gulp.task('build', ['copy:libs', 'scripts', 'images', 'sass', 'fonts', 'html'], 
     return;
 });
 
-gulp.task('serve', ['build', 'watch'], function () {
+gulp.task('serve', ['build'], function () {
     return gulp.src(distPath)
       .pipe(webserver({
         port: 8080,
