@@ -151,7 +151,7 @@ gulp.task('build', ['copy:libs', 'scripts', 'images', 'sass', 'fonts', 'html'], 
 gulp.task('serve', ['build'], function () {
     return gulp.src(distPath)
       .pipe(webserver({
-        host: '0.0.0.0',
+        host: process.env.HOSTNAME || 'localhost',
         port: 8080,
         livereload: true
       }));
