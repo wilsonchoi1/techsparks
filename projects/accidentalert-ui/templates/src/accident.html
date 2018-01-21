@@ -395,7 +395,7 @@
 			console.log('failed to initialize: ' + data);
 		});
 		var opts = {
-			redirectUri: "http://localhost:3000/accident.html"
+			redirectUri: window.location.origin + "/accident.html"
 		};
 		var loginUrl = keycloak.createLoginUrl(opts);
 		document.getElementById('loginUrl').href = loginUrl;
