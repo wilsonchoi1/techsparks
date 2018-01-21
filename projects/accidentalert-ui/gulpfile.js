@@ -15,6 +15,7 @@ var livereload         = require('gulp-livereload');
 var sourcemaps         = require('gulp-sourcemaps');
 var webserver          = require('gulp-webserver');
 var clean              = require('gulp-clean');
+var replace            = require('gulp-string-replace');
 
 var srcPath            = 'templates/src/';            // Path to the source files
 var distPath           = 'templates/dist/';            // Path to the distribution files
@@ -91,6 +92,7 @@ gulp.task('html', ['clean'], function () {
     return gulp
         .src([srcPath + '*.html'])
         .pipe(include())
+        .pipe(replace('http://localhost:18080', process.env.SSO_URL || 'http://localhost:18080'))
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running html task" }))
         .pipe(gulp.dest(distPath));
 });
