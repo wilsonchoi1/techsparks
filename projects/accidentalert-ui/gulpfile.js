@@ -5,7 +5,7 @@ var path               = require('path');
 var _                  = require('lodash');
 var uglify             = require('gulp-uglify'); 
 var sass               = require('gulp-sass');
-var cssmin             = require('gulp-minify-css');
+var cleanCSS           = require('gulp-clean-css');
 var rename             = require('gulp-rename'); 
 var autoprefixer       = require('gulp-autoprefixer');
 var include            = require('gulp-include');
@@ -61,7 +61,7 @@ gulp.task('sass', ['clean'], function () {
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running sass task" }))
         .pipe(autoprefixer({ browsers: ['> 1%', 'last 2 versions'], cascade: false }))
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running sass task" }))
-        .pipe(cssmin({ keepBreaks: false }))
+        .pipe(cleanCSS({ keepBreaks: false }))
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running sass task" }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(distPath + 'assets/css'));
