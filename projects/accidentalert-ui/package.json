@@ -19,7 +19,6 @@
     "gulp-imagemin": "^4.1.0",
     "gulp-include": "^2.3.1",
     "gulp-livereload": "^3.8.1",
-    "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
@@ -27,7 +26,8 @@
     "gulp-string-replace": "^1.0.0",
     "gulp-uglify": "^3.0.0",
     "gulp-webserver": "^0.9.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "yn": "^2.0.0"
   },
   "dependencies": {
     "patternfly": "^3.37.1"

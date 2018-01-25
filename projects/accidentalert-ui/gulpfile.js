@@ -16,6 +16,7 @@ var sourcemaps         = require('gulp-sourcemaps');
 var webserver          = require('gulp-webserver');
 var clean              = require('gulp-clean');
 var replace            = require('gulp-string-replace');
+var yn                 = require('yn');
 
 var srcPath            = 'templates/src/';            // Path to the source files
 var distPath           = 'templates/dist/';            // Path to the distribution files
@@ -135,7 +136,7 @@ gulp.task("copy:libs", ['clean'], function () {
 });
 
 // Watch task
-gulp.task('watch', ['clean'], function() {
+gulp.task('watch', function() {
     gulp.watch(watchPaths.scripts, ['scripts']);
     gulp.watch(watchPaths.images, ['images']);
     gulp.watch(watchPaths.sass, ['sass']);
@@ -156,9 +157,13 @@ gulp.task('serve', ['build'], function () {
       .pipe(webserver({
         host: process.env.HOSTNAME || 'localhost',
         port: 8080,
-        livereload: true
+        livereload: yn(process.env.LIVERELOAD, { default: false })
       }));
   });
+
+gulp.task('serve:watch', ['watch', 'serve'], function(){
+    return;
+});
 
 // Default task
 gulp.task('default', ['build', 'watch']);
