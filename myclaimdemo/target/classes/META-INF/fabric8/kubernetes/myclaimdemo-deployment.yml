@@ -3,7 +3,9 @@ apiVersion: "extensions/v1beta1"
 kind: "Deployment"
 metadata:
   annotations:
+    fabric8.io/git-commit: "e61d74658e82b4690e114f63f4647e9a5a479eca"
     fabric8.io/iconUrl: "img/icons/camel.svg"
+    fabric8.io/git-branch: "master"
     fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=myclaimdemo&var-version=1.0.0-SNAPSHOT"
   labels:
     provider: "fabric8"
@@ -21,7 +23,9 @@ spec:
   template:
     metadata:
       annotations:
+        fabric8.io/git-commit: "e61d74658e82b4690e114f63f4647e9a5a479eca"
         fabric8.io/iconUrl: "img/icons/camel.svg"
+        fabric8.io/git-branch: "master"
         fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=myclaimdemo&var-version=1.0.0-SNAPSHOT"
       labels:
         provider: "fabric8"

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd             http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd      http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf-spring.xsd">
+    <cxf:cxfEndpoint address="http://localhost:8080/soap-api/claim"
+        endpointName="ClaimServicePort" id="claimapply"
+        serviceName="tns:ClaimService"
+        wsdlURL="http://localhost:8080/soap-api/claim?wsdl" xmlns:tns="http://demo.redhat.org/"/>
+    <bean
+        class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelHttpTransportServlet"/>
+    <bean
+        class="org.springframework.boot.web.servlet.ServletRegistrationBean" id="servlet">
+        <property name="name" value="CamelServlet"/>
+        <property name="servlet" ref="camelHttpTransportServlet"/>
+        <property name="urlMappings" value="/poc/*"/>
+    </bean>
+    <bean class="org.redhat.demo.ClaimRequest" id="claimRequest"/>
+    <bean class="org.redhat.demo.ClaimResponse" id="claimResponse"/>
+    <!-- endpointName="ClaimServicePort" serviceName="tns:ClaimService"  -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <dataFormats>
+            <soapjaxb contextPath="org.redhat.demo" id="soapFormat"/>
+            <json allowJmsType="true" id="json" library="Jackson"/>
+            <json id="jsonClaimInput" library="Jackson" unmarshalTypeName="org.redhat.demo.ClaimInput" />
+            
+        </dataFormats>
+        <restConfiguration apiContextPath="api-docs" bindingMode="json"
+            component="servlet" contextPath="/poc">
+            <apiProperty key="cors" value="true"/>
+            <apiProperty key="api.title" value="Claim from Rest to SOAP"/>
+            <apiProperty key="api.version" value="1.0.0"/>
+        </restConfiguration>
+        <rest path="/claim">
+            <get uri="apply">
+                <description>Applying Claim</description>
+                <to uri="direct:applyclaim"/>
+            </get>
+             <post uri="apply">
+                <description>Applying Claim</description>
+                <to uri="direct:applyclaim"/>
+            </post>
+        </rest>
+        <route id="applyRoute">
+            <from id="_from2" uri="direct:applyclaim"/>
+            <log id="_log3" message="${body}"/>
+            <!--  <convertBodyTo id="_convertBodyTo2" type="java.lang.String"/>
+            <unmarshal id="_marshal2" ref="jsonClaimInput"/>-->
+            <bean id="_bean1" ref="claimRequest"/>
+            <marshal id="_marshal1" ref="soapFormat" />
+            <log id="_log1" message="${body}"/>
+            <to id="callapplyclaim" uri="cxf:bean:claimapply?dataFormat=MESSAGE"/>
+            <convertBodyTo id="_convertBodyTo1" type="java.lang.String"/>
+            <unmarshal id="_unmarshal1" ref="soapFormat"/>
+            <bean id="_bean2" ref="claimResponse"/>
+            <log id="_log2" message="result -------- ${body}"/>
+            <marshal id="_marshal2" ref="json"/>
+        </route>
+    </camelContext>
+</beans>

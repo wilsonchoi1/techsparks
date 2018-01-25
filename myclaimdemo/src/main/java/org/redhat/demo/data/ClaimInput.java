@@ -6,7 +6,7 @@ public class ClaimInput {
 	
 	String customerName = "";
 	String customerId="";
-	Date claimDate= null;
+	String claimDate= null;
 	String contactPhone = "";
 	String email = "";
 	String polno = "";
@@ -25,10 +25,10 @@ public class ClaimInput {
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
-	public Date getClaimDate() {
+	public String getClaimDate() {
 		return claimDate;
 	}
-	public void setClaimDate(Date claimDate) {
+	public void setClaimDate(String claimDate) {
 		this.claimDate = claimDate;
 	}
 	public String getContactPhone() {

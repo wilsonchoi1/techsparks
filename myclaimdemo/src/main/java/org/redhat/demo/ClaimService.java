@@ -1,5 +1,10 @@
 package org.redhat.demo;
 
-public class ClaimService {
+import org.redhat.demo.data.ClaimInput;
+import org.redhat.demo.data.ClaimOutput;
 
+public interface ClaimService {
+
+	public ClaimOutput apply(ClaimInput input);
+	
 }
