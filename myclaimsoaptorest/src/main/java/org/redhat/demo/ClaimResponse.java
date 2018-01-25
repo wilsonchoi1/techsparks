@@ -1,15 +1,14 @@
 package org.redhat.demo;
 
-
+import org.apache.camel.Exchange;
 
 public class ClaimResponse {
 
 	
-	public MyRestResponse convertSoapBody(ApplyResponse soapresponse) {
+	public void convertSoapBody(Exchange exchange) {
 		
-		MyRestResponse response = new MyRestResponse();
+		System.out.println(exchange.getIn().getBody());
+		//exchange.getIn().setBody("{\"status\":'ok'}");
 		
-		response.setStatus(soapresponse.getReturn().getStatus());
-		return response;
 	}
 }

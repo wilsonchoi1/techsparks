@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Define a traditional camel context here -->
+    <bean class="org.redhat.demo.MyClaimProcessor" id="myClaimProcessor"/>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="claim-route">
+            <from id="claim-batch" uri="amq:topic:alert"/>
+            <log id="_log3" message="---  ${body}"/>
+            <setHeader headerName="CamelHttpMethod">
+        			<constant>POST</constant>
+    			</setHeader>
+    			<bean ref="myClaimProcessor" id="_bean2"/>
+			<marshal id="_unmarshal2">
+                <json library="Jackson"/>
+            </marshal>
+			<log id="_log4" message="---  ${body}"/>
+            <to id="_to4" uri="http4://localhost:8088/poc/claim/apply" /> 
+        </route>
+    </camelContext>
+</beans>

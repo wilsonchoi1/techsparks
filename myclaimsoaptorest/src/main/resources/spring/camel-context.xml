@@ -21,9 +21,10 @@
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <dataFormats>
             <soapjaxb contextPath="org.redhat.demo" id="soapFormat"/>
-            <json id="json" library="Jackson" allowJmsType="true"/> 
+            <json allowJmsType="true" id="json" library="Jackson"/>
+            <json id="jsonClaimInput" library="Jackson" unmarshalTypeName="org.redhat.demo.ClaimInput" />
+            
         </dataFormats>
-        
         <restConfiguration apiContextPath="api-docs" bindingMode="json"
             component="servlet" contextPath="/poc">
             <apiProperty key="cors" value="true"/>
@@ -35,18 +36,25 @@
                 <description>Applying Claim</description>
                 <to uri="direct:applyclaim"/>
             </get>
+             <post uri="apply">
+                <description>Applying Claim</description>
+                <to uri="direct:applyclaim"/>
+            </post>
         </rest>
         <route id="applyRoute">
             <from id="_from2" uri="direct:applyclaim"/>
+            <log id="_log3" message="${body}"/>
+            <!--  <convertBodyTo id="_convertBodyTo2" type="java.lang.String"/>
+            <unmarshal id="_marshal2" ref="jsonClaimInput"/>-->
             <bean id="_bean1" ref="claimRequest"/>
-            <marshal id="_marshal1" ref="soapFormat"/>
+            <marshal id="_marshal1" ref="soapFormat" />
             <log id="_log1" message="${body}"/>
             <to id="callapplyclaim" uri="cxf:bean:claimapply?dataFormat=MESSAGE"/>
             <convertBodyTo id="_convertBodyTo1" type="java.lang.String"/>
             <unmarshal id="_unmarshal1" ref="soapFormat"/>
             <bean id="_bean2" ref="claimResponse"/>
             <log id="_log2" message="result -------- ${body}"/>
-           	<marshal ref="json"/>
+            <marshal id="_marshal2" ref="json"/>
         </route>
     </camelContext>
 </beans>
