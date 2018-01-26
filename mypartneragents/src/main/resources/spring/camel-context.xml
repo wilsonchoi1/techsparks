@@ -6,7 +6,7 @@
     <bean class="org.redhat.demo.MockDataGenarator" id="mockDataGenarator"/>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <route id="policedatagenerator">
-            <from id="police-data-generator" uri="timer:foo?period=2000"/>
+            <from id="police-data-generator" uri="timer:foo?repeatCount=1"/>
             <bean id="_bean1" method="generateAllData" ref="mockDataGenarator"/>
             <marshal id="_unmarshal1">
                 <json library="Jackson"/>
