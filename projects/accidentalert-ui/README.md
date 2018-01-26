@@ -1,23 +1,20 @@
-# README Template
+# README
 
-A template of README best practices to make your README simple to understand and easy to use.
+Red Hat Insurance Accident Alert Web Application is an HTML application secured with Red Hat Single Sign On (RH-SSO) that allows authorized entities to report accidents.
 
 ## Installation
 
-Quickly describe how to install your project and how to get it running
+To make installation easier, we provide an openshift template to install the web application. Follow these steps to get a running instance of the accident alert web application:
 
-1. Install Node dependencies
+1. Install Openshift template
 
-        npm install
+        oc create -f accidentalert-ui-template.json -n openshift
 
-2. Install Bower dependencies
+2. Add application to your project
 
-        bower install
+        oc new-app accidentalert-ui-template -p SSO_URL=<sso_url> -p BACKEND_URL=<backend_url> -p APPLICATION_HOSTNAME=<hostname>
 
-3. Install Composer dependencies
-
-        composer install
-
+<!---
 ## Usage
 
 Here you can write any kind of things that help others to use your project. Feel free to add as many aspects as you like. Here are just three examples:
@@ -30,6 +27,7 @@ Since some projects follow a special kind of deployment, you should provide a pr
 
 ### Cronjobs
 If you project is using cron jobs or any other automated scripts you should describe their functionality here.
+--->
 
 ## Support & Ownership
 
