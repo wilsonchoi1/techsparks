@@ -370,7 +370,7 @@
 				    type: 'post',
 				    data: $('#report').serialize(),
 				    headers: {
-					'Authorization', 'Bearer ' + keycloak.token,
+					'Authorization': 'Bearer ' + keycloak.token,
 				    },
 				    success: function (data) {
 					$('#success-notification').show();
