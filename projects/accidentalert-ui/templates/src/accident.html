@@ -365,14 +365,26 @@
 			});
 
 			$('#postReport').click(function () {
-				$.post(
+				$.ajax({
+				    url: 'http://localhost:8080/accidentcenter/report',
+				    type: 'post',
+				    data: $('#report').serialize(),
+				    headers: {
+					'Authorization', 'Bearer ' + keycloak.token,
+				    },
+				    success: function (data) {
+					$('#success-notification').show();
+					console.info(data);
+				    }
+				});
+				/*$.post(
 					'http://localhost:8080/accidentcenter/report',
 					$('#report').serialize()
 				).done(
 					function (data) {
 						$('#success-notification').show();
 					}
-				);
+				);*/
 			});
 		})(jQuery);
 	</script>
