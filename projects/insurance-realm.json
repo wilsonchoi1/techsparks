@@ -1,5 +1,5 @@
 {
-  "realm" : "insurance",
+  "realm" : "master",
   "accessTokenLifespan" : 300,
   "accessCodeLifespan" : 60,
   "accessCodeLifespanUserAction" : 300,
